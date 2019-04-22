@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-text="car.brand"></p>
+        <p v-text="car.name"></p>
+        <p v-bind:title="msg">Hello World {{ count }}</p>
+        <button v-on:click="handleClick">点我</button>
+         <ul>
+            <li v-for="(item, index) in list">
+                <span>{{ item.name }} - {{ index }}</span>
+                <span v-html="html"></span>
+            </li>
+        </ul>
+        <!--<p>{{ item }}</p> -->
+        <div>
+            <!-- <p>{{ count + 1 }}</p>
+            <p>{{ Date.now() + msg }}</p>
+            <p v-text="'当前时间为' + Date.now()"></p>
+            <p v-html="html + 1"></p> -->
+            <!-- <p>hello Vue {{msg}}</p> -->
+            <!-- <p v-text="car.model.easy"></p> -->
+            <!-- <p v-text="fn"></p> -->
+            <!-- <p>{{fn}}</p> -->
+            <!-- 
+            <input type="text" v-model="car.brand">
+            <p>Hello World {{msg}} {{welcome}} {{msg}}</p>
+            <button v-on:click="handleClick">点我</button> -->
+        </div>
+    </div>
+    <script src="./src/watcher.js"></script>
+    <script src="./src/observer.js"></script>
+    <script src="./src/compile.js"></script>
+    <script src="./src/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'Hello World',
+                welcome: 'welcome',
+                html: '<h1>hello World</h1>',
+                count: 1,
+                car: {
+                    brand: '大众',
+                    color: 'yellow',
+                    model: {
+                        easy: true
+                    }
+                },
+                item: "哈哈",
+                list: [
+                    { name: '张三' },
+                    { name: '李四' },
+                    { name: '王五' }
+                ]
+            },
+            computed: {
+                fn() {
+                    console.log('执行了');
+                    return this.msg + ':你好,世界';
+                }
+            },
+            methods: {
+                handleClick() {
+                    this.welcome = '哈啊哈';
+                    this.count++;
+                    console.log(this.$data.msg);
+                }
+            },
+            watch: {
+                // msg(newValue, oldValue) {
+                //     console.log('值发生了变化');
+                //     console.log(newValue);
+                // },
+                // 'car.brand'(newValue, oldValue) {
+                //     console.log('值发生了变化');
+                //     console.log(newValue);
+                // },
+                car: {
+                    handler(newValue, oldValue) {
+                        console.log('值发生了变化');
+                        console.log(oldValue);
+                    },
+                    immediate: false,
+                    deep: true
+                }
+            }
+        });
+        console.log(vm);
+    </script>
+</body>
+</html>
