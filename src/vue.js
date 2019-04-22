@@ -91,7 +91,6 @@ class Vue {
     }
 
     $set(obj, key, value) {
-        debugger
         this.$observer.$set(obj, key, value);
     }
 }
