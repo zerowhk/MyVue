@@ -47,6 +47,10 @@ class Observer {
      */
     defineReactive(data, key, value, dep) {
         let that = this;
+        // 记录上一次的发布者 dep, 防止重复注册比较函数（判断是否要通知订阅者的函数）
+        let prevDep;
+        // 记录上一轮操作的值,用来判断是否需要通知订阅者
+        let prevValue = value;
         Object.defineProperty(data, key, {
             configurable: true,
             enumerable: true,
@@ -56,18 +60,26 @@ class Observer {
                 return value;
             },
             set(newValue) {
-                if (value === newValue) {
-                    return;
-                }
                 // 设置的值为对象，重新添加响应式
                 if (typeof newValue === 'object') {
                     that.walk(newValue, value.__ob__);
                 }
 
                 value = newValue;
-                
-                // 通知更新
-                dep.notify();
+
+                // 防止重复发送通知
+                if (prevDep !== dep) {
+                    prevDep = dep
+                    nextTick(() => {
+                        // 值改变了，需要更新
+                        if (value !== prevValue) {
+                            prevValue = value;
+                            dep.notify();
+                        }
+                        // 清空上一次的发布者，为下一轮事件调用做准备
+                        prevDep = void(0);
+                    })
+                }
             }
         })
     }

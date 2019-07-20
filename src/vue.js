@@ -10,6 +10,7 @@ class Vue {
         this.$methods = options.methods;
         this.$computed = options.computed;
         this.$watch = options.watch;
+        this.$nextTick = nextTick;
         //数据劫持
         this.$observer = new Observer(this.$data);
 
@@ -94,3 +95,5 @@ class Vue {
         this.$observer.$set(obj, key, value);
     }
 }
+
+Vue.nextTick = nextTick;

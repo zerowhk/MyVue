@@ -34,6 +34,7 @@
             <button v-on:click="handleClick">点我</button> -->
         </div>
     </div>
+    <script src="./src//nextTick.js"></script>
     <script src="./src/watcher.js"></script>
     <script src="./src/observer.js"></script>
     <script src="./src/compile.js"></script>
@@ -69,27 +70,34 @@
             },
             methods: {
                 handleClick() {
-                    this.welcome = '哈啊哈';
+                    this.msg = '哈啊哈';
+                    this.msg = '哈啊哈2';
                     this.count++;
-                    console.log(this.$data.msg);
+                    this.count++;
+                    this.count++;
+                    this.count++;
+                    console.log(this.count);
                 }
             },
             watch: {
-                // msg(newValue, oldValue) {
-                //     console.log('值发生了变化');
-                //     console.log(newValue);
-                // },
+                msg(newValue, oldValue) {
+                    console.log('值发生了变化');
+                    console.log(newValue);
+                },
                 // 'car.brand'(newValue, oldValue) {
                 //     console.log('值发生了变化');
                 //     console.log(newValue);
                 // },
-                car: {
-                    handler(newValue, oldValue) {
-                        console.log('值发生了变化');
-                        console.log(oldValue);
-                    },
-                    immediate: false,
-                    deep: true
+                // car: {
+                //     handler(newValue, oldValue) {
+                //         console.log('值发生了变化');
+                //         console.log(oldValue);
+                //     },
+                //     immediate: false,
+                //     deep: true
+                // }
+                count(val) {
+                    console.log('count更新了:' + val);
                 }
             }
         });
